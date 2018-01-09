@@ -41,7 +41,7 @@ def gen_detection(d):
     draw = ImageDraw.Draw(curr_img)
 
     for det in result:
-        
+
         draw.rectangle([det['topleft']['x'], det['topleft']['y'], 
                         det['bottomright']['x'], det['bottomright']['y']],
                         outline=(255, 0, 0))
@@ -61,11 +61,10 @@ def gen_detection(d):
     yield frame
 
 
-
+# ATTENTION: the <path:path> parameter is crucial in order to deploy on Floydhub
 @app.route('/<path:path>/scoring_image', methods=["POST"])
-def video_feed(path):
-
-    r = request
+def video_feed(path): 
+    r = request # get the request
     return Response(gen_detection(r.data), mimetype='image/jpg')
 
 
